@@ -19,6 +19,6 @@ public class HelloWorldServlet extends HttpServlet {
         
 		PrintWriter out = response.getWriter();
 		out.println(
-				"<html><body>こんにちは!</body></html>");
+				"<html><body>テスト</body></html>");
 	}
 }
