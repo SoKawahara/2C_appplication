@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page import="java.util.List" %>
+
 <html>
 <head>
   <title>テスト</title>
@@ -95,7 +97,7 @@
       <div class = "member">
         <h3>メンバー</h3>
         <div style = "display: flex;align-items:center">
-          <p>佐藤・田中・鈴木・菊池</p>
+          <p>${ member_names }</p>
           <form method = "GET" action="" style = "margin-bottom:0;margin-left: 1.5rem"><input type ="submit" value ="追加"></form>
         </div>
         
@@ -106,28 +108,27 @@
       </div>
       <div class = "todo">
         <h3>Todo</h3>
-        <div style = "display: flex;justify-content:space-between;align-items:center;border-bottom: 1px solid black;padding: 0 1rem;margin-bottom:1rem;">
-          <p>清水寺に行く</p>
-          <div style = "display: flex">
-            <form method = "GET" action="" style = "margin-bottom:0;margin-left: 1.5rem"><input type ="submit" value ="達成"></form>
-            <form method = "GET" action="" style = "margin-bottom:0;margin-left:.5rem"><input type ="submit" value ="削除"></form>
-          </div>    
-        </div>
-        <div style = "display: flex;justify-content:space-between;align-items:center;border-bottom: 1px solid black;padding: 0 1rem;margin-bottom:1rem">
-          <p>伏見稲荷大社に行く</p>
-          <div style = "display: flex">
-            <form method = "GET" action="" style = "margin-bottom:0;margin-left: 1.5rem"><input type ="submit" value ="達成"></form>
-            <form method = "GET" action="" style = "margin-bottom:0;margin-left:.5rem"><input type ="submit" value ="削除"></form>
-          </div>    
-        </div>
+        <!-- request.getAttributeではObject型に変換されて渡されてくるのでList型に変換する -->
+        <% List<List<String>> todos = (List<List<String>>)(request.getAttribute("get_todos")); %>
+        <% for (int i = 0 ; i < todos.size() ; ++i){ %>
+          <div style = "display: flex;justify-content:space-between;align-items:center;border-bottom: 1px solid black;padding: 0 1rem;margin-bottom:1rem;">
+            <p>No.<%= todos.get(i).get(1) %></p>
+            <p style = "margin-left: 1rem;"><%= todos.get(i).get(0) %></p>
+            <div style = "display: flex">
+              <form method = "GET" action="" style = "margin-bottom:0;margin-left: 1.5rem"><input type ="submit" value ="達成"></form>
+              <form method = "GET" action="" style = "margin-bottom:0;margin-left:.5rem"><input type ="submit" value ="削除"></form>
+            </div>    
+          </div>
+        <% } %>
       </div>
     </section>
     <section class = "memory-container">
       <h1>思い出</h1>
       <section class = "memory-content">
-        <p>抹茶アイス美味しかった</p>
-        <p>金閣寺きれいだった</p>
-        <p>伏見稲荷大社上まで上がるの大変だった</p>
+        <% List<List<String>> memories = (List<List<String>>) request.getAttribute("memories"); %>
+        <% for (int i = 0 ; i < memories.size() ; ++i ){ %>
+            <p><span style = "margin-right: 1rem;">No. <%= memories.get(i).get(1) %></span><%= memories.get(i).get(3) %></p>
+        <% } %>
         <div>
           <form method = "GET" action="" style = "margin-bottom:0;">
             <input type = "text" name = "memory" size = "60" placeholder = "ここに思い出を入力してください" style = "margin-bottom: 1rem">
