@@ -9,6 +9,7 @@ public class TodoDB {
     public int trip_number;
     public int value;
     public String todo_name = "";
+    public boolean achieve;
 
     // DB接続のためのアドレスなど
     String server = "//172.21.37.48:5432/";
@@ -17,9 +18,6 @@ public class TodoDB {
     String passWord = "bond";
     String url = "jdbc:postgresql:" + server + dataBase;
 
-    public TodoDB(int todo_name) {
-    	
-    }
     public TodoDB(int trip_number, int value, String todo_name) {
         this.trip_number = trip_number;
         this.value = value;
@@ -32,7 +30,7 @@ public class TodoDB {
             int newTodoId = generateNewTodoId(connection);
 
             // 新しいレコードを追加
-            String insertQuery = "INSERT INTO todo (todo_id, trip_number, value, todo_name) VALUES (?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO todo (todo_id, trip_number, value, todo_name, achieve) VALUES (?, ?, ?, ?, false)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
                 preparedStatement.setInt(1, newTodoId);
                 preparedStatement.setInt(2, trip_number);
