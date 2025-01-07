@@ -1,6 +1,6 @@
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,8 +10,12 @@ public class HelloWorld extends HttpServlet {
  protected void doGet(HttpServletRequest request,
  HttpServletResponse response)
  throws ServletException, IOException {
- PrintWriter out = response.getWriter();
- out.println(
- "<html><body>Hello World!</body></html>");
+	 String url = "/WEB-INF/views/output.jsp";
+	 
+	 request.setCharacterEncoding("UTF-8");
+	 response.setContentType("text/html; charset=UTF-8");
+	 RequestDispatcher dispatcher 
+	   = getServletContext().getRequestDispatcher(url);
+	 dispatcher.forward(request,  response);
  }
 }
