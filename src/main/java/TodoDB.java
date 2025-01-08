@@ -21,7 +21,23 @@ public class TodoDB extends HttpServlet{
 		String todo_content = request.getParameter("todo");
 		String todo_place = request.getParameter("todo_place");
 		String todo_value = request.getParameter("todo_value");
-		new TodoDB(1 , Integer.parseInt(todo_value) , todo_content , todo_place);
+		String todo_status = request.getParameter("todo_status");
+		
+		//送信されたtodo_statusの値(達成、削除、追加)によって処理を分ける
+		//Javaで文字列の比較を行うにはequalsメソッドを使用する
+		if (todo_status.equals("達成")) {
+		} else if (todo_status.equals("削除")){
+			//trip_numberとtodo_idを取得する
+			String todo_id = request.getParameter("todo_id");
+			String trip_number = request.getParameter("trip_number");
+			
+			//削除を行うメソッドを使用するためにTodoDBクラスのインスタンスを作成する
+			TodoDB todo = new TodoDB();
+			todo.deleteTodoByIdAndTripNumber(Integer.parseInt(todo_id) , Integer.parseInt(trip_number));
+		}else{
+			System.out.println("追加が押されましした");
+	        new TodoDB(1 , Integer.parseInt(todo_value) , todo_content , todo_place);
+		}
 		
 		//この下で画面の描画を行う
 		//getContextPath()メソッドを使用することでサーバー内でアプリがデプロイされている場所を取得する
@@ -41,6 +57,7 @@ public class TodoDB extends HttpServlet{
     String passWord = "bond";
     String url = "jdbc:postgresql:" + server + dataBase;
 
+    //これはTodoを追加する為の処理を行っているコンストラクタ
     public TodoDB(int trip_number, int value, String todo_name , String place) {
         this.trip_number = trip_number;
         this.value = value;

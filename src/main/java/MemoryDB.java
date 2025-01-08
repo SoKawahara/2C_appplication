@@ -18,8 +18,21 @@ public class MemoryDB extends HttpServlet {
 			           HttpServletResponse response)
 	    throws IOException , ServletException
 	    {
-		  String memory_content = request.getParameter("memory");
-		  new MemoryDB(1 , 1 , memory_content);
+		  //送信されたtodo_statusの値(削除、追加)によって処理を分ける
+		  String memory_status = request.getParameter("memory_status");
+		  System.out.println(memory_status);
+		  
+		  if (memory_status.equals("追加")) {
+			  String memory_content = request.getParameter("memory");
+			  new MemoryDB(1 , 1 , memory_content);
+		  } else {
+			  int memory_id = Integer.parseInt(request.getParameter("memory_id"));
+			  int trip_number = Integer.parseInt(request.getParameter("trip_number"));
+			  MemoryDB memory = new MemoryDB();
+			  memory.deleteMemoryByIdAndTripNumber(memory_id , trip_number);
+			  
+			  
+		  }
 		  
 		  //この下で画面の描画を行う
 		  //getContextPath()メソッドを使用することでサーバー内でアプリがデプロイされている場所を取得する
