@@ -83,6 +83,42 @@
     .todo p {
       text-align: center;
     }
+    
+    .todo-form {
+      border: 2px solid black;
+      padding: 1.5rem;
+    }
+    
+    .todo-form input ,
+    .memory-form input{
+      display: block;
+      margin: auto;
+      width: 430px;
+    }
+    
+    .todo-form input:nth-of-type(2),
+    .memory-form input:nth-of-type(2) {
+      width: 130px;
+      margin-bottom: 2rem;
+    }
+    
+    .archive {
+      background-color: #8eb5f5;
+      border-radius: 20px;
+      border: 2px solid #8eb5f5;
+      color: white;
+    }
+    
+    .delete {
+      background-color: #d14d5d;
+      border: 2px solid #d14d5d;
+      border-radius: 20px;
+      color: white;
+    }
+    
+    
+    
+    
   </style>
 </head>
 
@@ -107,34 +143,59 @@
         <p>2024/02/12～2024/02/14</p>
       </div>
       <div class = "todo">
-        <h3>Todo</h3>
+        <h3>Todo一覧</h3>
         <!-- request.getAttributeではObject型に変換されて渡されてくるのでList型に変換する -->
         <% List<List<String>> todos = (List<List<String>>)(request.getAttribute("get_todos")); %>
-        <% for (int i = 0 ; i < todos.size() ; ++i){ %>
-          <div style = "display: flex;justify-content:space-between;align-items:center;border-bottom: 1px solid black;padding: 0 1rem;margin-bottom:1rem;">
-            <p>No.<%= todos.get(i).get(1) %></p>
-            <p style = "margin-left: 1rem;"><%= todos.get(i).get(0) %></p>
-            <div style = "display: flex">
-              <form method = "GET" action="" style = "margin-bottom:0;margin-left: 1.5rem"><input type ="submit" value ="達成"></form>
-              <form method = "GET" action="" style = "margin-bottom:0;margin-left:.5rem"><input type ="submit" value ="削除"></form>
-            </div>    
-          </div>
+        <% if (todos.size() > 0) { %>
+          <% for (int i = 0 ; i < todos.size() ; ++i){ %>
+            <div style = "display: flex;justify-content:space-between;align-items:center;border-bottom: 1px solid black;padding: 0 1rem;margin-bottom:1rem;">
+              <p>No.<%= todos.get(i).get(1) %></p>
+              <p style = "margin-left: 1rem;"><%= todos.get(i).get(0) %></p>
+              <div style = "display: flex">
+                <form method = "GET" action="" style = "margin-bottom:0;margin-left: 1.5rem"><input class = "archive" type ="submit" value ="達成"></form>
+                <form method = "GET" action="" style = "margin-bottom:0;margin-left:.5rem"><input class = "delete" type ="submit" value ="削除"></form>
+                <form method = "GET" action="/2CExample/todo_about" style = "margin-bottom:0;margin-left:.5rem">
+                  <input type="hidden" name="trip_number" value=<%= todos.get(i).get(2) %>>
+                  <input type="hidden" name="todo_id" value=<%= todos.get(i).get(1) %>>
+                  <input type = "submit" value = "詳細">
+                </form>
+              </div>    
+            </div>
+          <% } %>
+        <% } else { %>
+          <p>*現在登録されているTodoはありません</p>
         <% } %>
+      	
+        <div class = "todo-form">
+          <h2 style = "margin-top: 0;text-align:center;">～新規Todo作成～</h2>
+          <form method = "POST" action="/2CExample/add_todo" style = "margin-bottom:0;">
+            <label for = "todo">Todo名:</label>
+            <input type = "text" name = "todo" id = "todo" size = "60" placeholder = "ここにTodoを入力してください" style = "margin-bottom: 1rem; width: 400px;">
+            <label for = "todo_place">場所:</label>
+            <input type = "text" name = "todo_place" id = "todo_place" size = "40" placeholder = "ここに場所を入力してください" style = "margin-bottom: 1rem; width: 400px">
+            <label for = "todo_value">費用:</label>
+            <input type = "text" name = "todo_value" id = "todo_value" size = "20" placeholder = "ここに費用を入力してください(*半角数字で入力してください)" style = "margin-bottom: 1rem; width: 400px">
+            <input type ="submit" value ="Todoを追加する">
+          </form>
+        </div>
       </div>
     </section>
     <section class = "memory-container">
       <h1>思い出</h1>
       <section class = "memory-content">
         <% List<List<String>> memories = (List<List<String>>) request.getAttribute("memories"); %>
-        <% for (int i = 0 ; i < memories.size() ; ++i ){ %>
+        <% if (memories.size() > 0) { %>
+          <% for (int i = 0 ; i < memories.size() ; ++i ){ %>
             <p><span style = "margin-right: 1rem;">No. <%= memories.get(i).get(1) %></span><%= memories.get(i).get(3) %></p>
+          <% } %>
+        <% } else { %>
+          <p>*現在登録されている思い出はありません</p>
         <% } %>
-        <div>
-          <form method = "GET" action="" style = "margin-bottom:0;">
+        <div class = "memory-form">
+          <form method = "POST" action="/2CExample/add_memory" style = "margin-bottom:0;">
             <input type = "text" name = "memory" size = "60" placeholder = "ここに思い出を入力してください" style = "margin-bottom: 1rem">
             <input type ="submit" value ="思い出を追加する">
           </form>
-    
         </div>
         
       </section>

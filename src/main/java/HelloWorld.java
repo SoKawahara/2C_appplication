@@ -21,13 +21,13 @@ public class HelloWorld extends HttpServlet {
 	 List<List<String>> memories = new ArrayList<>();
 	 String member_names = "";
 	 
+	 String server = "//172.21.37.48:5432/";
+	 String database = "todo_database";
+	 String database_url = "jdbc:postgresql:" + server + database;
+	 
 	 
 	 //ここから下にデータベースに接続する為の処理を書く
 	 try {
-		 String server = "//172.21.37.48:5432/";
-		 String database = "todo_database";
-		 String database_url = "jdbc:postgresql:" + server + database;
-		 
 		 Class.forName("org.postgresql.Driver");
 		 Connection con = DriverManager.getConnection(database_url , "al22016" , "bond");
 		 
@@ -47,6 +47,7 @@ public class HelloWorld extends HttpServlet {
 			 List<String> tmp_list = new ArrayList<>();
 			 tmp_list.add(result_todos.getString("TODO_NAME"));
 			 tmp_list.add((String)result_todos.getString("TODO_ID"));
+			 tmp_list.add((String)result_todos.getString("TRIP_NUMBER"));
 			 todos.add(tmp_list);
 		 }
 		 
@@ -77,6 +78,7 @@ public class HelloWorld extends HttpServlet {
 	 request.setAttribute("memories" , memories);
 	 request.setAttribute("member_names", member_names);
 	 
+	 //ここで残りの処理をjspファイルに投げている
 	 RequestDispatcher dispatcher 
 	   = getServletContext().getRequestDispatcher(url);
 	 dispatcher.forward(request,  response);

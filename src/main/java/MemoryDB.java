@@ -1,10 +1,31 @@
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class MemoryDB {
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+public class MemoryDB extends HttpServlet {
+	public MemoryDB () {
+		
+	}
+	public void doPost(HttpServletRequest request , 
+			           HttpServletResponse response)
+	    throws IOException , ServletException
+	    {
+		  String memory_content = request.getParameter("memory");
+		  new MemoryDB(1 , 1 , memory_content);
+		  
+		  //この下で画面の描画を行う
+		  //getContextPath()メソッドを使用することでサーバー内でアプリがデプロイされている場所を取得する
+		  response.sendRedirect(request.getContextPath() + "/");
+		
+	    }
     public int memory_id;
     public int trip_number;
     public int member_id;
@@ -63,10 +84,5 @@ public class MemoryDB {
         }
 
         return newMemoryId;
-    }
-
-    public static void main(String[] args) {
-        // テスト用
-        new MemoryDB(1, 1, "新しい思い出");
     }
 }

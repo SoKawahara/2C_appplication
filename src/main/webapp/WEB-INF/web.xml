@@ -15,8 +15,38 @@
     <servlet-name>Hello</servlet-name>
     <servlet-class>HelloWorld</servlet-class>
   </servlet>
+  <servlet>
+    <description></description>
+    <display-name>TodoDB</display-name>
+    <servlet-name>TodoDB</servlet-name>
+    <servlet-class>TodoDB</servlet-class>
+  </servlet>
+  <servlet>
+    <description></description>
+    <display-name>MemoryDB</display-name>
+    <servlet-name>MemoryDB</servlet-name>
+    <servlet-class>MemoryDB</servlet-class>
+  </servlet>
+  <servlet>
+    <description></description>
+    <display-name>TodoAbout</display-name>
+    <servlet-name>TodoAbout</servlet-name>
+    <servlet-class>TodoAbout</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Hello</servlet-name>
-    <url-pattern>/ </url-pattern>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TodoDB</servlet-name>
+    <url-pattern>/add_todo</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>MemoryDB</servlet-name>
+    <url-pattern>/add_memory</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TodoAbout</servlet-name>
+    <url-pattern>/todo_about</url-pattern>
   </servlet-mapping>
 </web-app>
