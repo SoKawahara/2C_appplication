@@ -17,6 +17,9 @@ public class MemoryDB {
     String passWord = "bond";
     String url = "jdbc:postgresql:" + server + dataBase;
 
+    public MemoryDB() {
+    	
+    }
     public MemoryDB(int trip_number, int member_id, String content) {
         this.trip_number = trip_number;
         this.member_id = member_id;
@@ -64,9 +67,34 @@ public class MemoryDB {
 
         return newMemoryId;
     }
+    public void deleteMemoryByIdAndTripNumber(int memoryId, int tripNumber) {
+        try (Connection connection = DriverManager.getConnection(url, user, passWord)) {
+            String deleteQuery = "DELETE FROM memory WHERE memory_id = ? AND trip_number = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setInt(1, memoryId);
+                preparedStatement.setInt(2, tripNumber);
+
+                int rowsDeleted = preparedStatement.executeUpdate();
+                if (rowsDeleted > 0) {
+                    System.out.println("MEMORYが削除されました。ID: " + memoryId + ", Trip Number: " + tripNumber);
+                } else {
+                    System.out.println("指定された条件のMEMORYが見つかりませんでした。ID: " + memoryId + ", Trip Number: " + tripNumber);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
-        // テスト用
-        new MemoryDB(1, 1, "新しい思い出");
+    	//テスト用
+    	
+        //新しい思い出を作る
+        //new MemoryDB(1, 1, "新しい思い出");
+        
+    	//(memory_id,trip_number)の思い出を削除する
+        MemoryDB memoryDB = new MemoryDB();
+        memoryDB.deleteMemoryByIdAndTripNumber(1,1);
+        
     }
 }

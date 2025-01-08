@@ -17,6 +17,9 @@ public class TodoDB {
     String user = "al22016";
     String passWord = "bond";
     String url = "jdbc:postgresql:" + server + dataBase;
+    public TodoDB() {
+    	
+    }
 
     public TodoDB(int trip_number, int value, String todo_name) {
         this.trip_number = trip_number;
@@ -65,9 +68,33 @@ public class TodoDB {
 
         return newTodoId;
     }
+    public void deleteTodoByIdAndTripNumber(int todoId, int tripNumber) {
+        try (Connection connection = DriverManager.getConnection(url, user, passWord)) {
+            String deleteQuery = "DELETE FROM todo WHERE todo_id = ? AND trip_number = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                preparedStatement.setInt(1, todoId);
+                preparedStatement.setInt(2, tripNumber);
+
+                int rowsDeleted = preparedStatement.executeUpdate();
+                if (rowsDeleted > 0) {
+                    System.out.println("TODOが削除されました。ID: " + todoId + ", Trip Number: " + tripNumber);
+                } else {
+                    System.out.println("指定された条件のTODOが見つかりませんでした。ID: " + todoId + ", Trip Number: " + tripNumber);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         // テスト用
-        new TodoDB(1, 100, "新しいタスク");
+    	
+    	//新しいTODOを作る
+        //new TodoDB(1, 100, "新しいタスク");
+        
+    	//(todo_id,trip_number)のTODOを削除する
+        TodoDB todoDB = new TodoDB();
+        todoDB.deleteTodoByIdAndTripNumber(15,1);
     }
 }
