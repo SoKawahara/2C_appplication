@@ -1,14 +1,37 @@
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class TodoDB {
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+//web.xmlでマッピングしたURLに対してアクセスされた際にここに処理が飛んでくる
+public class TodoDB extends HttpServlet{
+	public TodoDB() {
+	}
+	public void doPost(HttpServletRequest request , 
+	          HttpServletResponse response)
+    throws IOException , ServletException {
+		//ここで送信されたフォームの内容を取得する
+		String todo_content = request.getParameter("todo");
+		String todo_place = request.getParameter("todo_place");
+		String todo_value = request.getParameter("todo_value");
+		new TodoDB(1 , Integer.parseInt(todo_value) , todo_content , todo_place);
+		
+		//この下で画面の描画を行う
+		//getContextPath()メソッドを使用することでサーバー内でアプリがデプロイされている場所を取得する
+		response.sendRedirect(request.getContextPath() + "/");
+	}
     public int todo_id;
     public int trip_number;
     public int value;
     public String todo_name = "";
+    public String place = "";
     public boolean achieve;
 
     // DB接続のためのアドレスなど
@@ -17,14 +40,12 @@ public class TodoDB {
     String user = "al22016";
     String passWord = "bond";
     String url = "jdbc:postgresql:" + server + dataBase;
-    public TodoDB() {
-    	
-    }
 
-    public TodoDB(int trip_number, int value, String todo_name) {
+    public TodoDB(int trip_number, int value, String todo_name , String place) {
         this.trip_number = trip_number;
         this.value = value;
         this.todo_name = todo_name;
+        this.place = place;
 
         try  {
         	Class.forName("org.postgresql.Driver");
@@ -33,12 +54,13 @@ public class TodoDB {
             int newTodoId = generateNewTodoId(connection);
 
             // 新しいレコードを追加
-            String insertQuery = "INSERT INTO todo (todo_id, trip_number, value, todo_name, achieve) VALUES (?, ?, ?, ?, false)";
+            String insertQuery = "INSERT INTO todo (todo_id, trip_number, value, todo_name, place , achieve) VALUES (?, ?, ?, ?, ? ,false)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
                 preparedStatement.setInt(1, newTodoId);
                 preparedStatement.setInt(2, trip_number);
                 preparedStatement.setInt(3, value);
                 preparedStatement.setString(4, todo_name);
+                preparedStatement.setString(5, place);
 
                 int rowsInserted = preparedStatement.executeUpdate();
                 if (rowsInserted > 0) {
@@ -91,10 +113,13 @@ public class TodoDB {
         // テスト用
     	
     	//新しいTODOを作る
-        //new TodoDB(1, 100, "新しいタスク");
+    	//new TodoDB(1, 100, "新しいタスク" , "京都");
         
     	//(todo_id,trip_number)のTODOを削除する
         TodoDB todoDB = new TodoDB();
-        todoDB.deleteTodoByIdAndTripNumber(15,1);
+        todoDB.deleteTodoByIdAndTripNumber(4,1);
+        
+        
+        
     }
 }
