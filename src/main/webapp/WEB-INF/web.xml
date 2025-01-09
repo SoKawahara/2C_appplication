@@ -11,9 +11,9 @@
   </welcome-file-list>
   <servlet>
     <description></description>
-    <display-name>HelloWorld</display-name>
-    <servlet-name>Hello</servlet-name>
-    <servlet-class>HelloWorld</servlet-class>
+    <display-name>ViewTrip</display-name>
+    <servlet-name>ViewTrip</servlet-name>
+    <servlet-class>ViewTrip</servlet-class>
   </servlet>
   <servlet>
     <description></description>
@@ -33,6 +33,7 @@
     <servlet-name>TodoAbout</servlet-name>
     <servlet-class>TodoAbout</servlet-class>
   </servlet>
+<<<<<<< HEAD
     <servlet>
     <description></description>
     <display-name>AddAbout</display-name>
@@ -44,10 +45,26 @@
     <display-name>MemberDB</display-name>
     <servlet-name>MemberDB</servlet-name>
     <servlet-class>MemberDB</servlet-class>
+=======
+  <servlet>
+    <description></description>
+    <display-name>ViewAllTrips</display-name>
+    <servlet-name>ViewAllTrips</servlet-name>
+    <servlet-class>ViewAllTrips</servlet-class>
+>>>>>>> branch 'master' of https://github.com/SoKawahara/2C_appplication.git
   </servlet>
   <servlet-mapping>
-    <servlet-name>Hello</servlet-name>
-    <url-pattern>/</url-pattern>
+    <servlet-name>ViewTrip</servlet-name>
+    <url-pattern>/1</url-pattern>
+    <url-pattern>/2</url-pattern>
+    <url-pattern>/3</url-pattern>
+    <url-pattern>/4</url-pattern>
+    <url-pattern>/5</url-pattern>
+    <url-pattern>/6</url-pattern>
+    <url-pattern>/7</url-pattern>
+    <url-pattern>/8</url-pattern>
+    <url-pattern>/9</url-pattern>
+    <url-pattern>/10</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>TodoDB</servlet-name>
@@ -61,6 +78,7 @@
     <servlet-name>TodoAbout</servlet-name>
     <url-pattern>/todo_about</url-pattern>
   </servlet-mapping>
+<<<<<<< HEAD
     <servlet-mapping>
     <servlet-name>AddAbout</servlet-name>
     <url-pattern>/add_about</url-pattern>
@@ -68,5 +86,10 @@
       <servlet-mapping>
     <servlet-name>MemberDB</servlet-name>
     <url-pattern>/add_member</url-pattern>
+=======
+  <servlet-mapping>
+    <servlet-name>ViewAllTrips</servlet-name>
+    <url-pattern>/</url-pattern>
+>>>>>>> branch 'master' of https://github.com/SoKawahara/2C_appplication.git
   </servlet-mapping>
 </web-app>

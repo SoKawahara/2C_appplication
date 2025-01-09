@@ -35,13 +35,13 @@ public class TodoDB extends HttpServlet{
 			TodoDB todo = new TodoDB();
 			todo.deleteTodoByIdAndTripNumber(Integer.parseInt(todo_id) , Integer.parseInt(trip_number));
 		}else{
-			System.out.println("追加が押されましした");
-	        new TodoDB(1 , Integer.parseInt(todo_value) , todo_content , todo_place);
+			String trip_number = request.getParameter("add_todo_trip_number");
+	        new TodoDB(Integer.valueOf(trip_number) , Integer.parseInt(todo_value) , todo_content , todo_place);
 		}
 		
 		//この下で画面の描画を行う
 		//getContextPath()メソッドを使用することでサーバー内でアプリがデプロイされている場所を取得する
-		response.sendRedirect(request.getContextPath() + "/");
+		response.sendRedirect(request.getContextPath() + "/" + request.getParameter("add_todo_trip_number"));
 	}
     public int todo_id;
     public int trip_number;
