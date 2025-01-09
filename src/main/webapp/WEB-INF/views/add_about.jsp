@@ -36,7 +36,8 @@
       		<% } %>
       </ul>
     </div>
-    <form method = "GET" action="/2CExample/" style = "margin-bottom:0;margin-left: 1.5rem"><input type ="submit" value ="戻る"></form>
+    <% String params_trip_number = (String) request.getAttribute("params_trip_number"); %>
+    <form method = "GET" action="/2CExample/<%= params_trip_number %>" style = "margin-bottom:0;margin-left: 1.5rem"><input type ="submit" value ="戻る"></form>
   </section>
 
 </body>

@@ -73,9 +73,10 @@ public class AddAbout extends HttpServlet {
 		  
 		  String url = "/WEB-INF/views/add_about.jsp";
 		  response.setContentType("text/html; charset=UTF-8");
-			 
+		  
+	 
 		  request.setAttribute("add_about", add_about);
-
+		  request.setAttribute("params_trip_number", params_trip_number);
 		  //ここで残りの処理をjspファイルに投げている
 		  RequestDispatcher dispatcher 
 			  = getServletContext().getRequestDispatcher(url);
