@@ -134,7 +134,7 @@
     }
     
     .todo-form input:nth-of-type(2),
-    .memory-form input:nth-of-type(3) {
+    .memory-form input:nth-of-type(4) {
       width: 130px;
       margin-bottom: 2rem;
     }
@@ -201,7 +201,12 @@
       <div class = "member">
         <h3>メンバー</h3>
         <div style = "display: flex;align-items:center">
-          <p>${ member_names }</p>
+          <% String member_names = String.valueOf(request.getAttribute("member_names")); %>
+          <% if (member_names.length() > 0) { %>
+            <p><%= member_names %></p>
+          <% } else { %>
+            <p>＊登録されているメンバーがいません</p>
+          <% } %>
           <form method = "GET" action="" style = "margin-bottom:0;margin-left: 1.5rem"><input type ="submit" value ="追加"></form>
         </div>
         
@@ -224,15 +229,18 @@
                   <input class = "archive" type ="submit" name = "todo_status" value ="達成">
                   <input type="hidden" name="trip_number" value=<%= todos.get(i).get(2) %>>
                   <input type="hidden" name="todo_id" value=<%= todos.get(i).get(1) %>>
+                  <input type = "hidden" name = "add_todo_trip_number" value = <%= trip_info.get(0) %>>
                 </form>
                 <form method = "POST" action="/2CExample/add_todo" style = "margin-bottom:0;margin-left:.5rem">
                   <input class = "delete" type ="submit" name = "todo_status" value ="削除">
                   <input type="hidden" name="trip_number" value=<%= todos.get(i).get(2) %>>
                   <input type="hidden" name="todo_id" value=<%= todos.get(i).get(1) %>>
+                  <input type = "hidden" name = "add_todo_trip_number" value = <%= trip_info.get(0) %>>
                 </form>
                 <form method = "GET" action="/2CExample/todo_about" style = "margin-bottom:0;margin-left:.5rem">
                   <input type="hidden" name="trip_number" value=<%= todos.get(i).get(2) %>>
                   <input type="hidden" name="todo_id" value=<%= todos.get(i).get(1) %>>
+                  <input type = "hidden" name = "add_todo_trip_number" value = <%= trip_info.get(0) %>>
                   <input type = "submit" value = "詳細" class = "view-about-todo">
                 </form>
               </div>    
@@ -252,6 +260,7 @@
             <label for = "todo_value">費用:</label>
             <input type = "text" name = "todo_value" id = "todo_value" size = "20" placeholder = "ここに費用を入力してください(*半角数字で入力してください)" style = "margin-bottom: 1rem; width: 400px">
             <input type="hidden" name="todo_status" value="追加">
+            <input type = "hidden" name = "add_todo_trip_number" value = <%= trip_info.get(0) %>>
             <input type ="submit" value ="Todoを追加する">
           </form>
         </div>
@@ -269,6 +278,7 @@
                 <input class = "delete" type ="submit" name = "memory_status" value ="削除">
                 <input type="hidden" name="trip_number" value = <%= memories.get(i).get(0) %>>
                 <input type="hidden" name="memory_id" value = <%= memories.get(i).get(1) %>>
+                <input type = "hidden" name = "add_memory_trip_number" value = <%= trip_info.get(0) %>>
               </form>
               </p>
             </div>
@@ -281,6 +291,7 @@
           <form method = "POST" action="/2CExample/add_memory" style = "margin-bottom:0;">
             <input type = "text" name = "memory" size = "60" placeholder = "ここに思い出を入力してください" style = "margin-bottom: 1rem">
             <input type ="hidden" name = "memory_status" value ="追加">
+            <input type = "hidden" name = "add_memory_trip_number" value = <%= trip_info.get(0) %>>
             <input type ="submit" value ="思い出を追加する">
           </form>
         </div>

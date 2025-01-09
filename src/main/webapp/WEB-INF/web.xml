@@ -11,9 +11,9 @@
   </welcome-file-list>
   <servlet>
     <description></description>
-    <display-name>HelloWorld</display-name>
-    <servlet-name>Hello</servlet-name>
-    <servlet-class>HelloWorld</servlet-class>
+    <display-name>ViewTrip</display-name>
+    <servlet-name>ViewTrip</servlet-name>
+    <servlet-class>ViewTrip</servlet-class>
   </servlet>
   <servlet>
     <description></description>
@@ -34,8 +34,17 @@
     <servlet-class>TodoAbout</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Hello</servlet-name>
-    <url-pattern>/</url-pattern>
+    <servlet-name>ViewTrip</servlet-name>
+    <url-pattern>/1</url-pattern>
+    <url-pattern>/2</url-pattern>
+    <url-pattern>/3</url-pattern>
+    <url-pattern>/4</url-pattern>
+    <url-pattern>/5</url-pattern>
+    <url-pattern>/6</url-pattern>
+    <url-pattern>/7</url-pattern>
+    <url-pattern>/8</url-pattern>
+    <url-pattern>/9</url-pattern>
+    <url-pattern>/10</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>TodoDB</servlet-name>

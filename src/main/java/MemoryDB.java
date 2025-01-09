@@ -36,7 +36,7 @@ public class MemoryDB extends HttpServlet {
 		  
 		  //この下で画面の描画を行う
 		  //getContextPath()メソッドを使用することでサーバー内でアプリがデプロイされている場所を取得する
-		  response.sendRedirect(request.getContextPath() + "/");
+		  response.sendRedirect(request.getContextPath() + "/" + request.getParameter("add_memory_trip_number"));
 		
 	    }
     public int memory_id;
