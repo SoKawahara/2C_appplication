@@ -203,7 +203,7 @@
         <div style = "display: flex;align-items:center">
           <p>${ member_names }</p>
           <form method = "GET" action="/2CExample/add_about" style = "margin-bottom:0;margin-left: 1.5rem">         
-           <input type="hidden" name="trip_number" value=<%= 1 %>>
+           <input type="hidden" name="trip_number" value=<%= trip_info.get(0) %>>
           <input type ="submit" value ="追加"></form>
           
         </div>
