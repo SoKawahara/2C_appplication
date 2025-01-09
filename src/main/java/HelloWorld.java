@@ -19,6 +19,7 @@ public class HelloWorld extends HttpServlet {
 	 String url = "/WEB-INF/views/output.jsp";
 	 List<List<String>> todos = new ArrayList<>();
 	 List<List<String>> memories = new ArrayList<>();
+	 List<String> trip_info = new ArrayList<>();
 	 String member_names = "";
 	 
 	 String server = "//172.21.37.48:5432/";
@@ -33,8 +34,19 @@ public class HelloWorld extends HttpServlet {
 		 
 		 Statement stmt = con.createStatement();
 		 
+		 //ここで旅行先、日付を取得する
+		 String get_trip_info = "select cast(trip_number as varchar) as trip_number , destination , cast(departure_day as varchar) as departure_day , cast(return_day as varchar) as return_day from trip where trip_number = 1";
+		 ResultSet result_trip_info = stmt.executeQuery(get_trip_info);
+		 while (result_trip_info.next()) {
+			trip_info.add(result_trip_info.getString("TRIP_NUMBER"));
+			trip_info.add(result_trip_info.getString("DESTINATION"));
+			trip_info.add(result_trip_info.getString("DEPARTURE_DAY"));
+			trip_info.add(result_trip_info.getString("RETURN_DAY"));
+		 }
+		 
+		 
 		 //ここで旅行に参加するメンバーを追加する処理を書く
-		 String get_members = "SELECT * FROM MEMBER";
+		 String get_members = "select * from member where member_id in (select member_id from trip_member where trip_number = 1)";
 		 ResultSet result_members = stmt.executeQuery(get_members);
 		 while (result_members.next()) {
 			 member_names = member_names + result_members.getString("NAME") + "・";
@@ -74,6 +86,7 @@ public class HelloWorld extends HttpServlet {
 	 request.setCharacterEncoding("UTF-8");
 	 response.setContentType("text/html; charset=UTF-8");
 	 
+	 request.setAttribute("trip_info", trip_info);
 	 request.setAttribute("get_todos", todos);
 	 request.setAttribute("memories" , memories);
 	 request.setAttribute("member_names", member_names);

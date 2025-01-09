@@ -191,11 +191,12 @@
 
 <body>
   <h1>旅行アプリケーション</h1>
+  <% List<String> trip_info = (List<String>) request.getAttribute("trip_info"); %>
   <section class = "trip-container">
     <section class = "todo-container">
       <div class = "destination">
         <h3>旅行先</h3>
-        <p>大阪・京都</p>
+        <p><%= trip_info.get(1) %></p>
       </div>
       <div class = "member">
         <h3>メンバー</h3>
@@ -207,7 +208,7 @@
       </div>
       <div class = "date">
         <h3>日付</h3>
-        <p>2024/02/12～2024/02/14</p>
+        <p><%= trip_info.get(2) %>～<%= trip_info.get(3) %></p>
       </div>
       <div class = "todo">
         <h3 style = "margin-bottom: 1rem;">Todo一覧</h3>
