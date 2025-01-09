@@ -201,20 +201,11 @@
       <div class = "member">
         <h3>メンバー</h3>
         <div style = "display: flex;align-items:center">
-<<<<<<< HEAD
           <p>${ member_names }</p>
           <form method = "GET" action="/2CExample/add_about" style = "margin-bottom:0;margin-left: 1.5rem">         
            <input type="hidden" name="trip_number" value=<%= 1 %>>
           <input type ="submit" value ="追加"></form>
-=======
-          <% String member_names = String.valueOf(request.getAttribute("member_names")); %>
-          <% if (member_names.length() > 0) { %>
-            <p><%= member_names %></p>
-          <% } else { %>
-            <p>＊登録されているメンバーがいません</p>
-          <% } %>
-          <form method = "GET" action="" style = "margin-bottom:0;margin-left: 1.5rem"><input type ="submit" value ="追加"></form>
->>>>>>> branch 'master' of https://github.com/SoKawahara/2C_appplication.git
+          
         </div>
         
       </div>
