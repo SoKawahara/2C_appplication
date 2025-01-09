@@ -36,7 +36,7 @@ public class MemberDB extends HttpServlet{
 		
 		//この下で画面の描画を行う
 		//getContextPath()メソッドを使用することでサーバー内でアプリがデプロイされている場所を取得する
-		response.sendRedirect(request.getContextPath() + "/");
+		response.sendRedirect(request.getContextPath() + "/" + trip_number);
 	}
     public int member_id;
     public int trip_number;

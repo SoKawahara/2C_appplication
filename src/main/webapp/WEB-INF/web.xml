@@ -80,7 +80,7 @@
     <servlet-name>AddAbout</servlet-name>
     <url-pattern>/add_about</url-pattern>
   </servlet-mapping>
-      <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>MemberDB</servlet-name>
     <url-pattern>/add_member</url-pattern>
   </servlet-mapping>
