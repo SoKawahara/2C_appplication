@@ -35,8 +35,8 @@ public class TodoDB extends HttpServlet{
 			TodoDB todo = new TodoDB();
 			todo.deleteTodoByIdAndTripNumber(Integer.parseInt(todo_id) , Integer.parseInt(trip_number));
 		}else{
-			System.out.println("追加が押されましした");
-	        new TodoDB(1 , Integer.parseInt(todo_value) , todo_content , todo_place);
+			String trip_number = request.getParameter("add_todo_trip_number");
+	        new TodoDB(Integer.valueOf(trip_number) , Integer.parseInt(todo_value) , todo_content , todo_place);
 		}
 		
 		//この下で画面の描画を行う

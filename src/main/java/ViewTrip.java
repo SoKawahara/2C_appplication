@@ -16,7 +16,6 @@ public class ViewTrip extends HttpServlet {
  protected void doGet(HttpServletRequest request,
  HttpServletResponse response)
  throws ServletException, IOException {
-	 String url = "/WEB-INF/views/output.jsp";
 	 List<List<String>> todos = new ArrayList<>();
 	 List<List<String>> memories = new ArrayList<>();
 	 List<String> trip_info = new ArrayList<>();
@@ -108,6 +107,7 @@ public class ViewTrip extends HttpServlet {
 	 request.setAttribute("member_names", member_names);
 	 
 	 //ここで残りの処理をjspファイルに投げている
+	 String url = "/WEB-INF/views/output.jsp";
 	 RequestDispatcher dispatcher 
 	   = getServletContext().getRequestDispatcher(url);
 	 dispatcher.forward(request,  response);

@@ -33,6 +33,12 @@
     <servlet-name>TodoAbout</servlet-name>
     <servlet-class>TodoAbout</servlet-class>
   </servlet>
+  <servlet>
+    <description></description>
+    <display-name>ViewAllTrips</display-name>
+    <servlet-name>ViewAllTrips</servlet-name>
+    <servlet-class>ViewAllTrips</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>ViewTrip</servlet-name>
     <url-pattern>/1</url-pattern>
@@ -57,5 +63,9 @@
   <servlet-mapping>
     <servlet-name>TodoAbout</servlet-name>
     <url-pattern>/todo_about</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ViewAllTrips</servlet-name>
+    <url-pattern>/</url-pattern>
   </servlet-mapping>
 </web-app>
