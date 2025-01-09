@@ -33,6 +33,18 @@
     <servlet-name>TodoAbout</servlet-name>
     <servlet-class>TodoAbout</servlet-class>
   </servlet>
+    <servlet>
+    <description></description>
+    <display-name>AddAbout</display-name>
+    <servlet-name>AddAbout</servlet-name>
+    <servlet-class>AddAbout</servlet-class>
+  </servlet>
+      <servlet>
+    <description></description>
+    <display-name>MemberDB</display-name>
+    <servlet-name>MemberDB</servlet-name>
+    <servlet-class>MemberDB</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Hello</servlet-name>
     <url-pattern>/</url-pattern>
@@ -48,5 +60,13 @@
   <servlet-mapping>
     <servlet-name>TodoAbout</servlet-name>
     <url-pattern>/todo_about</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>AddAbout</servlet-name>
+    <url-pattern>/add_about</url-pattern>
+  </servlet-mapping>
+      <servlet-mapping>
+    <servlet-name>MemberDB</servlet-name>
+    <url-pattern>/add_member</url-pattern>
   </servlet-mapping>
 </web-app>
