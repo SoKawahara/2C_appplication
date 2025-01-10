@@ -3,7 +3,7 @@
 
 <html>
 <head>
-  <title>テスト</title>
+  <title>旅行アプリケーション</title>
   <style>
     body {
      overflow-x: hidden;
@@ -191,6 +191,7 @@
 
 <body>
   <h1>旅行アプリケーション</h1>
+  <a href = "/2CExample/">旅行一覧に戻る</a>
   <% List<String> trip_info = (List<String>) request.getAttribute("trip_info"); %>
   <section class = "trip-container">
     <section class = "todo-container">

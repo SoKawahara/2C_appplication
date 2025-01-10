@@ -3,7 +3,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -68,7 +67,7 @@ public class TodoDB extends HttpServlet{
         	Class.forName("org.postgresql.Driver");
         	Connection connection = DriverManager.getConnection(url, user, passWord);
             // 新しいtodo_idを生成
-            int newTodoId = generateNewTodoId(connection);
+            int newTodoId = generateNewTodoId(connection , trip_number);
 
             // 新しいレコードを追加
             String insertQuery = "INSERT INTO todo (todo_id, trip_number, value, todo_name, place , achieve) VALUES (?, ?, ?, ?, ? ,false)";
@@ -89,15 +88,17 @@ public class TodoDB extends HttpServlet{
         }
     }
 
-    private int generateNewTodoId(Connection connection) {
+    private int generateNewTodoId(Connection connection , int trip_number) {
         int newTodoId = 0;
-        String query = "SELECT MAX(todo_id) AS max_id FROM todo";
+        String get_max_id = "select max(todo_id) as max_id from todo group by trip_number having trip_number = ?";
 
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-
-            if (resultSet.next()) {
-                newTodoId = resultSet.getInt("max_id") + 1;
+        try {
+        	PreparedStatement prestmt = connection.prepareStatement(get_max_id);
+        	prestmt.setInt(1, trip_number);
+        	ResultSet result_max_id = prestmt.executeQuery();
+        	
+            if (result_max_id.next()) {
+                newTodoId = result_max_id.getInt("max_id") + 1;
             } else {
                 newTodoId = 1; // テーブルが空の場合、最初のIDを1に設定
             }
