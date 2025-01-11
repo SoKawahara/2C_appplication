@@ -12,8 +12,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class AddAbout extends HttpServlet {
-	public AddAbout() {}
+public class DeleteAbout extends HttpServlet {
+	public DeleteAbout() {}
 	public void doGet(HttpServletRequest request , 
 			           HttpServletResponse response)
 	    throws IOException , ServletException
@@ -27,7 +27,7 @@ public class AddAbout extends HttpServlet {
 		  
 		  //JSPファイルで使用するための変数
 		  //[名前,ID]を持つ
-		  List<List<String>> add_about = new ArrayList<>();
+		  List<List<String>> delete_about = new ArrayList<>();
 		  
 		  
 		  
@@ -43,11 +43,12 @@ public class AddAbout extends HttpServlet {
 				 PreparedStatement prestmt;
 				 String get_members = 	"SELECT m.name, m.member_id " + 
 	                     				"FROM member m " + 
-	                     				"WHERE m.member_id NOT IN ( " + 
+	                     				"WHERE m.member_id IN ( " + 
 	                     				"    SELECT tm.member_id " + 
 	                     				"    FROM trip_member tm " + 
 	                     				"    WHERE tm.trip_number = ? " + 
-	                     				")";
+	                     				")" +
+	                     				"ORDER BY m.member_id ASC" ;
 				 prestmt = con.prepareStatement(get_members);
 				 prestmt.setInt(1, Integer.parseInt(params_trip_number));
 
@@ -60,7 +61,7 @@ public class AddAbout extends HttpServlet {
 					 tmplist.add(result_members.getString(1));
 					 tmplist.add(result_members.getString(2));
 					 tmplist.add(params_trip_number);
-					 add_about.add(tmplist);
+					 delete_about.add(tmplist);
 				 }
 				 	 
 				 prestmt.close();
@@ -71,11 +72,11 @@ public class AddAbout extends HttpServlet {
 		  
 		  
 		  
-		  String url = "/WEB-INF/views/add_about.jsp";
+		  String url = "/WEB-INF/views/delete_about.jsp";
 		  response.setContentType("text/html; charset=UTF-8");
 		  
 	 
-		  request.setAttribute("add_about", add_about);
+		  request.setAttribute("delete_about", delete_about);
 		  request.setAttribute("params_trip_number", params_trip_number);
 		  //ここで残りの処理をjspファイルに投げている
 		  RequestDispatcher dispatcher 

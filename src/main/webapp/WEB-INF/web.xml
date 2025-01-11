@@ -39,6 +39,12 @@
     <servlet-name>AddAbout</servlet-name>
     <servlet-class>AddAbout</servlet-class>
   </servlet>
+    <servlet>
+    <description></description>
+    <display-name>DeleteAbout</display-name>
+    <servlet-name>DeleteAbout</servlet-name>
+    <servlet-class>DeleteAbout</servlet-class>
+  </servlet>
   <servlet>
     <description></description>
     <display-name>MemberDB</display-name>
@@ -98,5 +104,13 @@
     <servlet-name>Trip</servlet-name>
     <url-pattern>/new</url-pattern>
     <url-pattern>/delete</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>DeleteAbout</servlet-name>
+    <url-pattern>/delete_about</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>MemberDB</servlet-name>
+    <url-pattern>/delete_member</url-pattern>
   </servlet-mapping>
 </web-app>

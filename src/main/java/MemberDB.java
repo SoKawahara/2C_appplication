@@ -27,7 +27,7 @@ public class MemberDB extends HttpServlet{
 
 			//削除を行うメソッドを使用するためにMemberDBクラスのインスタンスを作成する
 			MemberDB delete = new MemberDB();
-			//delete.delete(Integer.parseInt(member_id) , Integer.parseInt(trip_number));
+			delete.delete(Integer.parseInt(member_id) , Integer.parseInt(trip_number));
 		}else{
 			System.out.println("追加が押されましした");
 			MemberDB add = new MemberDB();
@@ -77,18 +77,18 @@ public class MemberDB extends HttpServlet{
     }
 
 
-    public void deleteTodoByIdAndTripNumber(int todoId, int tripNumber) {
+    public void delete(int member_id, int trip_number){
         try (Connection connection = DriverManager.getConnection(url, user, passWord)) {
-            String deleteQuery = "DELETE FROM todo WHERE todo_id = ? AND trip_number = ?";
+            String deleteQuery = "DELETE FROM trip_member WHERE member_id = ? AND trip_number = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
-                preparedStatement.setInt(1, todoId);
-                preparedStatement.setInt(2, tripNumber);
+                preparedStatement.setInt(1, member_id);
+                preparedStatement.setInt(2, trip_number);
 
                 int rowsDeleted = preparedStatement.executeUpdate();
                 if (rowsDeleted > 0) {
-                    System.out.println("TODOが削除されました。ID: " + todoId + ", Trip Number: " + tripNumber);
+                    System.out.println("mennberが削除されました。ID: " + member_id + ", Trip Number: " + trip_number);
                 } else {
-                    System.out.println("指定された条件のTODOが見つかりませんでした。ID: " + todoId + ", Trip Number: " + tripNumber);
+                    System.out.println("指定された条件のmemberが見つかりませんでした。ID: " + member_id + ", Trip Number: " + trip_number);
                 }
             }
         } catch (Exception e) {
