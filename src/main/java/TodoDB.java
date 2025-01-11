@@ -25,6 +25,13 @@ public class TodoDB extends HttpServlet{
 		//送信されたtodo_statusの値(達成、削除、追加)によって処理を分ける
 		//Javaで文字列の比較を行うにはequalsメソッドを使用する
 		if (todo_status.equals("達成")) {
+			String todo_id = request.getParameter("todo_id");
+			String trip_number = request.getParameter("trip_number");
+			
+			//Todoテーブルの指定されたレコードのarchiveカラムを更新する
+			TodoDB todo = new TodoDB();
+			todo.UppdateArchiveColumn(Integer.valueOf(trip_number) , Integer.valueOf(todo_id));
+			
 		} else if (todo_status.equals("削除")){
 			//trip_numberとtodo_idを取得する
 			String todo_id = request.getParameter("todo_id");
@@ -126,6 +133,29 @@ public class TodoDB extends HttpServlet{
             e.printStackTrace();
         }
     }
+    
+    private void UppdateArchiveColumn(int trip_number , int todo_id) {
+    	// DB接続のためのアドレスなど
+        String server = "//172.21.37.48:5432/";
+        String dataBase = "todo_database";
+        String user = "al22016";
+        String passWord = "bond";
+        String url = "jdbc:postgresql:" + server + dataBase;
+        
+        try (Connection connection = DriverManager.getConnection(url, user, passWord)) {
+            String updateQuery = "update todo set achieve = ? where trip_number = ? and todo_id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                preparedStatement.setBoolean(1 , true);
+                preparedStatement.setInt(2, trip_number);
+                preparedStatement.setInt(3, todo_id);
+
+                preparedStatement.executeUpdate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }	
+    }
+    
 
     public static void main(String[] args) {
         // テスト用

@@ -48,6 +48,7 @@ public class TodoAbout extends HttpServlet {
 					 todo_about.add(result_members.getString(3));
 					 todo_about.add(result_members.getString(4));
 					 todo_about.add(String.valueOf(result_members.getInt(5)));
+					 todo_about.add(String.valueOf(result_members.getBoolean(6)));
 				 }
 				 	 
 				 prestmt.close();

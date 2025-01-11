@@ -73,6 +73,7 @@ public class ViewTrip extends HttpServlet {
 			 tmp_list.add(result_todos.getString("TODO_NAME"));
 			 tmp_list.add((String)result_todos.getString("TODO_ID"));
 			 tmp_list.add((String)result_todos.getString("TRIP_NUMBER"));
+			 tmp_list.add((String)result_todos.getString("ACHIEVE"));
 			 todos.add(tmp_list);
 		 }
 		 prestmt_todo.close();
