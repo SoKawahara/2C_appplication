@@ -51,6 +51,12 @@
     <servlet-name>ViewAllTrips</servlet-name>
     <servlet-class>ViewAllTrips</servlet-class>
   </servlet>
+  <servlet>
+    <description></description>
+    <display-name>Trip</display-name>
+    <servlet-name>Trip</servlet-name>
+    <servlet-class>Trip</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>ViewTrip</servlet-name>
     <url-pattern>/1</url-pattern>
@@ -86,6 +92,11 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ViewAllTrips</servlet-name>
-    <url-pattern>/</url-pattern>
+    <url-pattern>/top</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Trip</servlet-name>
+    <url-pattern>/new</url-pattern>
+    <url-pattern>/delete</url-pattern>
   </servlet-mapping>
 </web-app>

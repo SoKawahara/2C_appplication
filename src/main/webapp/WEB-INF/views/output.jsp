@@ -3,19 +3,20 @@
 
 <html>
 <head>
-  <title>テスト</title>
+  <title>旅行アプリケーション</title>
   <style>
     body {
      overflow-x: hidden;
     }
     h1 {
       width: 40%;
-      margin: 3rem auto;
+      margin: 3rem auto 0 auto;
       text-align: center;
-      font-size: 30px;
-      font-weight: 400;
-      font-family: "Noto Sans JP", "游ゴシック体", "Yu Gothic", "Meiryo", sans-serif;
-      border-bottom: 2px solid black;
+      font-family: "Caveat", serif;
+      font-optical-sizing: auto;
+      font-weight: 500;
+      font-style: normal;
+      color: #abcade;
     }
     
     h1:before {
@@ -48,6 +49,12 @@
       font-weight: 420;
       font-style: normal;
     }
+    label {
+      font-family: "Caveat", serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+    }
     .trip-container {
       width: 90%;
       padding: 1rem;
@@ -56,6 +63,7 @@
       display: flex;
       justify-content: space-around;
     }
+    
     .memory-content {
       width: 90%;
       margin: auto;
@@ -179,6 +187,22 @@
       color: white;
       cursor: pointer;
     }
+    .back-top-page {
+      display: flex;
+      align-items: center;
+    }
+    .back-top-page a {
+      text-decoration: none;
+      color: black;
+      font-family: "Caveat", serif;
+      font-optical-sizing: auto;
+      font-weight: 450;
+      font-style: normal;
+    }
+    .back-top-page a:hover {
+      cursor: pointer;
+      color: blue;
+    }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -191,6 +215,10 @@
 
 <body>
   <h1>旅行アプリケーション</h1>
+  <div class = "back-top-page">
+    <img src = "/2CExample/images/door.png" alt = "ドアの画像" style = "width: 36px;height: 36px;">
+    <a href = "/2CExample/top">←旅行一覧に戻る</a>
+  </div>
   <% List<String> trip_info = (List<String>) request.getAttribute("trip_info"); %>
   <section class = "trip-container">
     <section class = "todo-container">
@@ -220,15 +248,21 @@
         <% if (todos.size() > 0) { %>
           <% for (int i = 0 ; i < todos.size() ; ++i){ %>
             <div style = "display: flex;justify-content:space-between;align-items:center;border-bottom: 1px solid black;padding: 0 1rem;margin-bottom:1rem;">
-              <p>No.<%= todos.get(i).get(1) %></p>
+              <% if (!todos.get(i).get(3).equals("t")) { %>
+                <p>No.<%= todos.get(i).get(1) %></p>
+              <% } else { %>
+                <p>★No. <%= todos.get(i).get(1) %></p>
+              <% } %>
               <p style = "margin-left: 1rem;"><%= todos.get(i).get(0) %></p>
               <div style = "display: flex">
-                <form method = "POST" action="/2CExample/add_todo" style = "margin-bottom:0;margin-left: 1.5rem">
-                  <input class = "archive" type ="submit" name = "todo_status" value ="達成">
-                  <input type="hidden" name="trip_number" value=<%= todos.get(i).get(2) %>>
-                  <input type="hidden" name="todo_id" value=<%= todos.get(i).get(1) %>>
-                  <input type = "hidden" name = "add_todo_trip_number" value = <%= trip_info.get(0) %>>
-                </form>
+                <% if (!todos.get(i).get(3).equals("t")) { %>
+                  <form method = "POST" action="/2CExample/add_todo" style = "margin-bottom:0;margin-left: 1.5rem">
+                    <input class = "archive" type ="submit" name = "todo_status" value ="達成">
+                    <input type="hidden" name="trip_number" value=<%= todos.get(i).get(2) %>>
+                    <input type="hidden" name="todo_id" value=<%= todos.get(i).get(1) %>>
+                    <input type = "hidden" name = "add_todo_trip_number" value = <%= trip_info.get(0) %>>
+                  </form>
+                <% } %>
                 <form method = "POST" action="/2CExample/add_todo" style = "margin-bottom:0;margin-left:.5rem">
                   <input class = "delete" type ="submit" name = "todo_status" value ="削除">
                   <input type="hidden" name="trip_number" value=<%= todos.get(i).get(2) %>>
@@ -265,7 +299,7 @@
       </div>
     </section>
     <section class = "memory-container">
-      <h1 class = "memory-h1" style = "margin-bottom: 0;">思い出</h1>
+      <h2 style = "text-align: center;"class = "memory-h1" style = "margin-bottom: 0;">〇思い出</h2>
       <section class = "memory-content">
         <% List<List<String>> memories = (List<List<String>>) request.getAttribute("memories"); %>
         <% if (memories.size() > 0) { %>

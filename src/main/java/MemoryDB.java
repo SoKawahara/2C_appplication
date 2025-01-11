@@ -3,7 +3,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -24,14 +23,13 @@ public class MemoryDB extends HttpServlet {
 		  
 		  if (memory_status.equals("追加")) {
 			  String memory_content = request.getParameter("memory");
-			  new MemoryDB(1 , 1 , memory_content);
+			  String trip_number = request.getParameter("add_memory_trip_number");
+			  new MemoryDB(Integer.parseInt(trip_number) , 1 , memory_content);
 		  } else {
 			  int memory_id = Integer.parseInt(request.getParameter("memory_id"));
 			  int trip_number = Integer.parseInt(request.getParameter("trip_number"));
 			  MemoryDB memory = new MemoryDB();
-			  memory.deleteMemoryByIdAndTripNumber(memory_id , trip_number);
-			  
-			  
+			  memory.deleteMemoryByIdAndTripNumber(memory_id , trip_number);	  
 		  }
 		  
 		  //この下で画面の描画を行う
@@ -60,7 +58,8 @@ public class MemoryDB extends HttpServlet {
         	Class.forName("org.postgresql.Driver");
         	Connection connection = DriverManager.getConnection(url, user, passWord);
             // 新しいtodo_idを生成
-            int newMemoryId = generateNewTodoId(connection);
+            int newMemoryId = generateNewTodoId(connection , trip_number);
+            System.out.println(newMemoryId);
 
             // 新しいレコードを追加
             String insertQuery = "INSERT INTO memory (memory_id, trip_number, member_id, content) VALUES (?, ?, ?, ?)";
@@ -80,18 +79,22 @@ public class MemoryDB extends HttpServlet {
         }
     }
 
-    private int generateNewTodoId(Connection connection) {
+    //旅行番号ごとに1から始まる連番を作成する
+    private int generateNewTodoId(Connection connection , int trip_number) {
         int newMemoryId = 0;
-        String query = "SELECT MAX(memory_id) AS max_id FROM memory";
+        String get_max_id = "select max(memory_id) as max_number from memory group by trip_number having trip_number = ?";
 
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-
-            if (resultSet.next()) {
-                newMemoryId = resultSet.getInt("max_id") + 1;
-            } else {
-                newMemoryId = 1; // テーブルが空の場合、最初のIDを1に設定
-            }
+        try {
+        	PreparedStatement prestmt;
+        	prestmt = connection.prepareStatement(get_max_id);
+        	prestmt.setInt(1, trip_number);
+        	ResultSet result_max_id = prestmt.executeQuery();
+        	
+        	if (result_max_id.next()) {
+        		newMemoryId = result_max_id.getInt("max_number") + 1;
+        	} else {
+        		newMemoryId = 1;
+        	}
         } catch (Exception e) {
             e.printStackTrace();
         }

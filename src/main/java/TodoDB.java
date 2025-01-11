@@ -3,7 +3,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -26,6 +25,13 @@ public class TodoDB extends HttpServlet{
 		//送信されたtodo_statusの値(達成、削除、追加)によって処理を分ける
 		//Javaで文字列の比較を行うにはequalsメソッドを使用する
 		if (todo_status.equals("達成")) {
+			String todo_id = request.getParameter("todo_id");
+			String trip_number = request.getParameter("trip_number");
+			
+			//Todoテーブルの指定されたレコードのarchiveカラムを更新する
+			TodoDB todo = new TodoDB();
+			todo.UppdateArchiveColumn(Integer.valueOf(trip_number) , Integer.valueOf(todo_id));
+			
 		} else if (todo_status.equals("削除")){
 			//trip_numberとtodo_idを取得する
 			String todo_id = request.getParameter("todo_id");
@@ -68,7 +74,7 @@ public class TodoDB extends HttpServlet{
         	Class.forName("org.postgresql.Driver");
         	Connection connection = DriverManager.getConnection(url, user, passWord);
             // 新しいtodo_idを生成
-            int newTodoId = generateNewTodoId(connection);
+            int newTodoId = generateNewTodoId(connection , trip_number);
 
             // 新しいレコードを追加
             String insertQuery = "INSERT INTO todo (todo_id, trip_number, value, todo_name, place , achieve) VALUES (?, ?, ?, ?, ? ,false)";
@@ -89,15 +95,17 @@ public class TodoDB extends HttpServlet{
         }
     }
 
-    private int generateNewTodoId(Connection connection) {
+    private int generateNewTodoId(Connection connection , int trip_number) {
         int newTodoId = 0;
-        String query = "SELECT MAX(todo_id) AS max_id FROM todo";
+        String get_max_id = "select max(todo_id) as max_id from todo group by trip_number having trip_number = ?";
 
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-
-            if (resultSet.next()) {
-                newTodoId = resultSet.getInt("max_id") + 1;
+        try {
+        	PreparedStatement prestmt = connection.prepareStatement(get_max_id);
+        	prestmt.setInt(1, trip_number);
+        	ResultSet result_max_id = prestmt.executeQuery();
+        	
+            if (result_max_id.next()) {
+                newTodoId = result_max_id.getInt("max_id") + 1;
             } else {
                 newTodoId = 1; // テーブルが空の場合、最初のIDを1に設定
             }
@@ -125,6 +133,29 @@ public class TodoDB extends HttpServlet{
             e.printStackTrace();
         }
     }
+    
+    private void UppdateArchiveColumn(int trip_number , int todo_id) {
+    	// DB接続のためのアドレスなど
+        String server = "//172.21.37.48:5432/";
+        String dataBase = "todo_database";
+        String user = "al22016";
+        String passWord = "bond";
+        String url = "jdbc:postgresql:" + server + dataBase;
+        
+        try (Connection connection = DriverManager.getConnection(url, user, passWord)) {
+            String updateQuery = "update todo set achieve = ? where trip_number = ? and todo_id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                preparedStatement.setBoolean(1 , true);
+                preparedStatement.setInt(2, trip_number);
+                preparedStatement.setInt(3, todo_id);
+
+                preparedStatement.executeUpdate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }	
+    }
+    
 
     public static void main(String[] args) {
         // テスト用

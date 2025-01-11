@@ -16,6 +16,13 @@
       <p>No. <%= todo_about.get(0) %><span style = "margin-left: 1rem;"><%= todo_about.get(2) %></span></p>
       <p>場所: <span style = "margin-left: 1rem;"><%= todo_about.get(3) %></span></p>
       <p>費用: <span style = "margin-left: 1rem;"><%= todo_about.get(4) %>円</p>
+      <p>ステータス: 
+        <% if (todo_about.get(5).equals("true")) { %>
+          <span style = "margin-left: 1rem;">達成済み</span>
+        <% } else { %>
+          <span style = "margin-left: 1rem">未達成</span>
+        <% } %>
+      </p>
     </div>
     <form method = "GET" action="/2CExample/<%= todo_about.get(1) %>" style = "margin-bottom:0;margin-left: 1.5rem"><input type ="submit" value ="戻る"></form>
   </section>
