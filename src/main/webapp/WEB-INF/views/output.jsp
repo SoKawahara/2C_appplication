@@ -155,25 +155,29 @@
       border-radius: 30px;
     }
     
-    .archive {
+    .archive ,
+    .add-member {
       background-color: #8eb5f5;
       border-radius: 20px;
       border: 2px solid #8eb5f5;
       color: white;
     }
     
-    .archive:hover {
+    .archive:hover,
+    .add-member:hover {
       cursor: pointer;
     }
     
-    .delete {
+    .delete , 
+    .delete-member {
       background-color: #d14d5d;
       border: 2px solid #d14d5d;
       border-radius: 20px;
       color: white;
     }
     
-    .delete:hover {
+    .delete:hover ,
+    .delete-member:hover{
       cursor: pointer;
     }
     
@@ -232,11 +236,11 @@
           <p>${ member_names }</p>
           <form method = "GET" action="/2CExample/add_about" style = "margin-bottom:0;margin-left: 1.5rem">         
            <input type="hidden" name="trip_number" value=<%= trip_info.get(0) %>>
-           <input type ="submit" value ="追加"></form>
+           <input class = "add-member" type ="submit" value ="追加"></form>
           
           <form method = "GET" action="/2CExample/delete_about" style = "margin-bottom:0;margin-left: 1.5rem">         
            <input type="hidden" name="trip_number" value=<%= trip_info.get(0) %>>
-           <input type ="submit" value ="削除"></form>
+           <input class = "delete-member" type ="submit" value ="削除"></form>
           
         </div>
         
